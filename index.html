@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.8.6/umd/react.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.8.6/umd/react-dom.production.min.js"></script>   
+    <script src=" https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+      var myArr=[]; var current=[]; var gen=0;
+      for(var i=0; i<30; i++){
+        for(var p=0; p<50; p++){
+          current.push(p)
+      // console.log('#'+i+'grid'+p)
+      //  $('#'+i+'grid'+p).css('background','red')
+        }
+        myArr.push(current)
+        current=[];
+      }
+
+class MyComponent extends React.Component{
+  constructor(props){
+    super(props);
+    this.state={generation:0, test: false}
+    this.handleChange=this.handleChange.bind(this);
+    this.startChange=this.startChange.bind(this);
+    this.randomChange=this.randomChange.bind(this);
+  }
+  
+  randomChange(event){
+       this.setState({generation:0})
+      for(var i=0; i<30; i++){
+        for(var p=0; p<50; p++){
+          if(Math.random()>0.5){
+       $('#'+i+'grid'+p).css('background-color',"rgb(239, 204, 102)")          
+          }
+        }
+      }
+    var myVar= setInterval(function(){
+       if($('#two1').css('display')=="none"){
+
+     var curr1={}; var curr2={}; var me=""; var count=0;
+      
+      for(var i=0; i<30; i++){
+        for(var p=0; p<50; p++){
+          count=0;
+         if($('#'+i+'grid'+p).css('background-color')=="rgb(239, 204, 102)"){
+             if($('#'+(i-1)+'grid'+(p-1)).css('background-color')=="rgb(239, 204, 102)"){
+               count++;
+             }
+             if($('#'+(i-1)+'grid'+p).css('background-color')=="rgb(239, 204, 102)"){
+               count++;
+             }
+             if($('#'+(i-1)+'grid'+(p+1)).css('background-color')=="rgb(239, 204, 102)"){
+               count++;
+             }
+             if($('#'+i+'grid'+(p-1)).css('background-color')=="rgb(239, 204, 102)"){
+               count++;
+             }
+             if($('#'+i+'grid'+(p+1)).css('background-color')=="rgb(239, 204, 102)"){
+               count++;
+             }
+             if($('#'+(i+1)+'grid'+(p-1)).css('background-color')=="rgb(239, 204, 102)"){
+               count++;
+             }
+             if($('#'+(i+1)+'grid'+p).css('background-color')=="rgb(239, 204, 102)"){
+               count++;
+             }
+             if($('#'+(i+1)+'grid'+(p+1)).css('background-color')=="rgb(239, 204, 102)"){
+               count++;
+             }             
+           //console.log(count)
+           if(count<2 || count>3){
+             if(!curr1[i]){curr1[i]=[]};
+             curr1[i]==curr1[i].push(p)
+             //$('#'+i+'grid'+p).css('background-color','rgb(0, 0, 0)')
+           }
+         }else{
+             if($('#'+(i-1)+'grid'+(p-1)).css('background-color')=="rgb(239, 204, 102)"){
+               count++;
+             }
+             if($('#'+(i-1)+'grid'+p).css('background-color')=="rgb(239, 204, 102)"){
+               count++;
+             }
+             if($('#'+(i-1)+'grid'+(p+1)).css('background-color')=="rgb(239, 204, 102)"){
+               count++;
+             }
+             if($('#'+i+'grid'+(p-1)).css('background-color')=="rgb(239, 204, 102)"){
+               count++;
+             }
+             if($('#'+i+'grid'+(p+1)).css('background-color')=="rgb(239, 204, 102)"){
+               count++;
+             }
+             if($('#'+(i+1)+'grid'+(p-1)).css('background-color')=="rgb(239, 204, 102)"){
+               count++;
+             }
+             if($('#'+(i+1)+'grid'+p).css('background-color')=="rgb(239, 204, 102)"){
+               count++;
+             }
+             if($('#'+(i+1)+'grid'+(p+1)).css('background-color')=="rgb(239, 204, 102)"){
+               count++;
+             }
+        
+           if(count==3){
+             if(!curr2[i]){curr2[i]=[]};
+             curr2[i]==curr2[i].push(p)             
+            // $('#'+i+'grid'+p).css('background-color',"rgb(239, 204, 102)")
+           }         
+         }
+          //console.log(JSON.stringify(curr1))
+        }         
+      }
+      var arr1= Object.keys(curr1);
+      var arr2= Object.keys(curr2);
+     // console.log(curr1)
+// console.log(curr1[1].indexOf(25))
+ 
+      for(var i=0; i<30; i++){
+        for(var p=0; p<50; p++){                 
+          if(arr1.indexOf(i.toString())>=0 && curr1[i].indexOf(p)>=0){
+            $('#'+i+'grid'+p).css('background-color','rgb(0, 0, 0)'); 
+          }
+          if(arr2.indexOf(i.toString())>=0 && curr2[i].indexOf(p)>=0){
+            $('#'+i+'grid'+p).css('background-color',"rgb(239, 204, 102)"); 
+          }
+        }
+       }
+
+      
+     }
+  else{
+     console.log('clear')
+   //  this.setState({test: false, generation: this.state.generation});
+     clearInterval(myVar)
+   }       
+      this.setState({test:true, generation: this.state.generation+1})
+    }.bind(this),1000);    
+    
+  }
+  
+  startChange(event){
+    console.log(event.target.id)
+     var myVar= setInterval(function(){
+       if($('#two1').css('display')=="none"){
+
+     var curr1={}; var curr2={}; var me=""; var count=0;
+      
+      for(var i=0; i<30; i++){
+        for(var p=0; p<50; p++){
+          count=0;
+         if($('#'+i+'grid'+p).css('background-color')=="rgb(239, 204, 102)"){
+             if($('#'+(i-1)+'grid'+(p-1)).css('background-color')=="rgb(239, 204, 102)"){
+               count++;
+             }
+             if($('#'+(i-1)+'grid'+p).css('background-color')=="rgb(239, 204, 102)"){
+               count++;
+             }
+             if($('#'+(i-1)+'grid'+(p+1)).css('background-color')=="rgb(239, 204, 102)"){
+               count++;
+             }
+             if($('#'+i+'grid'+(p-1)).css('background-color')=="rgb(239, 204, 102)"){
+               count++;
+             }
+             if($('#'+i+'grid'+(p+1)).css('background-color')=="rgb(239, 204, 102)"){
+               count++;
+             }
+             if($('#'+(i+1)+'grid'+(p-1)).css('background-color')=="rgb(239, 204, 102)"){
+               count++;
+             }
+             if($('#'+(i+1)+'grid'+p).css('background-color')=="rgb(239, 204, 102)"){
+               count++;
+             }
+             if($('#'+(i+1)+'grid'+(p+1)).css('background-color')=="rgb(239, 204, 102)"){
+               count++;
+             }             
+           //console.log(count)
+           if(count<2 || count>3){
+             if(!curr1[i]){curr1[i]=[]};
+             curr1[i]==curr1[i].push(p)
+             //$('#'+i+'grid'+p).css('background-color','rgb(0, 0, 0)')
+           }
+         }else{
+             if($('#'+(i-1)+'grid'+(p-1)).css('background-color')=="rgb(239, 204, 102)"){
+               count++;
+             }
+             if($('#'+(i-1)+'grid'+p).css('background-color')=="rgb(239, 204, 102)"){
+               count++;
+             }
+             if($('#'+(i-1)+'grid'+(p+1)).css('background-color')=="rgb(239, 204, 102)"){
+               count++;
+             }
+             if($('#'+i+'grid'+(p-1)).css('background-color')=="rgb(239, 204, 102)"){
+               count++;
+             }
+             if($('#'+i+'grid'+(p+1)).css('background-color')=="rgb(239, 204, 102)"){
+               count++;
+             }
+             if($('#'+(i+1)+'grid'+(p-1)).css('background-color')=="rgb(239, 204, 102)"){
+               count++;
+             }
+             if($('#'+(i+1)+'grid'+p).css('background-color')=="rgb(239, 204, 102)"){
+               count++;
+             }
+             if($('#'+(i+1)+'grid'+(p+1)).css('background-color')=="rgb(239, 204, 102)"){
+               count++;
+             }
+        
+           if(count==3){
+             if(!curr2[i]){curr2[i]=[]};
+             curr2[i]==curr2[i].push(p)             
+            // $('#'+i+'grid'+p).css('background-color',"rgb(239, 204, 102)")
+           }         
+         }
+          //console.log(JSON.stringify(curr1))
+        }         
+      }
+      var arr1= Object.keys(curr1);
+      var arr2= Object.keys(curr2);
+     // console.log(curr1)
+// console.log(curr1[1].indexOf(25))
+ 
+      for(var i=0; i<30; i++){
+        for(var p=0; p<50; p++){                 
+          if(arr1.indexOf(i.toString())>=0 && curr1[i].indexOf(p)>=0){
+            $('#'+i+'grid'+p).css('background-color','rgb(0, 0, 0)'); 
+          }
+          if(arr2.indexOf(i.toString())>=0 && curr2[i].indexOf(p)>=0){
+            $('#'+i+'grid'+p).css('background-color',"rgb(239, 204, 102)"); 
+          }
+        }
+       }
+
+      
+     }
+  else{
+     console.log('clear')
+   //  this.setState({test: false, generation: this.state.generation});
+     clearInterval(myVar)
+   }       
+      this.setState({test:true, generation: this.state.generation+1})
+    }.bind(this),1000);
+        
+ 
+    
+  }
+  
+  async handleChange(event){     
+      $('.four').on('click', function(){
+        $('.grid').css('background','black') 
+      })
+  await this.setState({generation:0, test: false})
+  }
+
+ componentDidMount() {
+    window.addEventListener('load', this.randomChange);
+          $('#two1').css('display',"none");
+          $('#two2').css('display',"block");
+
+ }  
+  
+  render(){
+    $(document).ready(function(){    
+      $('#two1').on('click', function(){
+        $('#two1').css('display','none') 
+        $('#two2').css('display','block') 
+      })  
+      $('#two2').on('click', function(){
+        $('#two1').css('display','block') 
+        $('#two2').css('display','none')         
+      }) 
+      $('.three').on('click', function(){
+        $('#two1').css('display','none') 
+        $('#two2').css('display','block') 
+      })  
+     
+      
+      for(var i=0; i<30; i++){
+        for(var p=0; p<50; p++){
+          // $('#'+i+'grid'+p).css('background','black')
+        }
+$('.row'+i).css('transform','translate('+0+'px,'+i*-23+'px)')        
+$('.row'+i+" li").css('display','inline-block') 
+       
+      }
+           
+      $('.five').on('click', function(){
+        $('.words').css('display','none')
+        $('.words2').css('display','block')
+        $('.gB2').css('height','210px')
+        
+      })
+      
+      $('#chi7').on('click', function(){
+        $('.words').css('display','block')
+        $('.words2').css('display','none')
+        $('.gB2').css('height','190px')        
+      })      
+      
+      $('#chi1').on('click', function(){
+        $('.grid').css('background','black')         
+        $('#5grid1').css('background','#efcc66')
+        $('#5grid2').css('background','#efcc66')
+        $('#6grid1').css('background','#efcc66')
+        $('#6grid2').css('background','#efcc66')
+        $('#5grid11').css('background','#efcc66')
+        $('#6grid11').css('background','#efcc66')
+        $('#7grid11').css('background','#efcc66')
+        $('#4grid12').css('background','#efcc66')
+        $('#8grid12').css('background','#efcc66')
+        $('#3grid13').css('background','#efcc66')
+        $('#9grid13').css('background','#efcc66')
+        $('#3grid14').css('background','#efcc66')
+        $('#9grid14').css('background','#efcc66')
+        $('#6grid15').css('background','#efcc66')
+        $('#8grid16').css('background','#efcc66')
+        $('#4grid16').css('background','#efcc66')
+        $('#5grid17').css('background','#efcc66')
+        $('#6grid17').css('background','#efcc66')
+        $('#7grid17').css('background','#efcc66')        
+        $('#6grid18').css('background','#efcc66')
+        $('#5grid21').css('background','#efcc66')
+        $('#4grid21').css('background','#efcc66')
+        $('#3grid21').css('background','#efcc66')
+        $('#5grid22').css('background','#efcc66')
+        $('#4grid22').css('background','#efcc66')
+        $('#3grid22').css('background','#efcc66')
+        $('#2grid23').css('background','#efcc66')
+        $('#6grid23').css('background','#efcc66')
+        $('#2grid25').css('background','#efcc66')
+        $('#6grid25').css('background','#efcc66')
+        $('#1grid25').css('background','#efcc66')
+        $('#7grid25').css('background','#efcc66')
+        $('#4grid35').css('background','#efcc66')
+        $('#3grid35').css('background','#efcc66')
+        $('#4grid36').css('background','#efcc66')
+        $('#3grid36').css('background','#efcc66')     
+      })
+      
+      $('#chi2').on('click', function(){
+        $('.grid').css('background','black')         
+        $('#12grid17').css('background','#efcc66')
+        $('#18grid17').css('background','#efcc66')
+        $('#12grid18').css('background','#efcc66')
+        $('#18grid18').css('background','#efcc66')
+        $('#12grid19').css('background','#efcc66')
+        $('#13grid19').css('background','#efcc66')
+        $('#17grid19').css('background','#efcc66')
+        $('#18grid19').css('background','#efcc66')
+        $('#10grid21').css('background','#efcc66')
+        $('#9grid21').css('background','#efcc66')
+        $('#8grid21').css('background','#efcc66')
+        $('#13grid21').css('background','#efcc66')
+        $('#14grid21').css('background','#efcc66')
+        $('#16grid21').css('background','#efcc66')
+        $('#17grid21').css('background','#efcc66')
+        $('#20grid21').css('background','#efcc66')
+        $('#21grid21').css('background','#efcc66')
+        $('#22grid21').css('background','#efcc66')
+        $('#20grid22').css('background','#efcc66')        
+        $('#18grid22').css('background','#efcc66')
+        $('#16grid22').css('background','#efcc66')
+        $('#14grid22').css('background','#efcc66')
+        $('#12grid22').css('background','#efcc66')
+        $('#10grid22').css('background','#efcc66')
+        $('#12grid23').css('background','#efcc66')
+        $('#13grid23').css('background','#efcc66')
+        $('#17grid23').css('background','#efcc66')
+        $('#18grid23').css('background','#efcc66')
+        $('#12grid25').css('background','#efcc66')
+        $('#13grid25').css('background','#efcc66')
+        $('#17grid25').css('background','#efcc66')
+        $('#18grid25').css('background','#efcc66')
+        $('#10grid26').css('background','#efcc66')
+        $('#12grid26').css('background','#efcc66')
+        $('#14grid26').css('background','#efcc66')
+        $('#16grid26').css('background','#efcc66') 
+        $('#18grid26').css('background','#efcc66')     
+        $('#20grid26').css('background','#efcc66')     
+        $('#8grid27').css('background','#efcc66')     
+        $('#9grid27').css('background','#efcc66')     
+        $('#10grid27').css('background','#efcc66')     
+        $('#13grid27').css('background','#efcc66')     
+        $('#14grid27').css('background','#efcc66')     
+        $('#16grid27').css('background','#efcc66')     
+        $('#17grid27').css('background','#efcc66')     
+        $('#20grid27').css('background','#efcc66')     
+        $('#21grid27').css('background','#efcc66')     
+        $('#22grid27').css('background','#efcc66')     
+        $('#12grid29').css('background','#efcc66')     
+        $('#13grid29').css('background','#efcc66')     
+        $('#17grid29').css('background','#efcc66')     
+        $('#18grid29').css('background','#efcc66')     
+        $('#12grid30').css('background','#efcc66')     
+        $('#18grid30').css('background','#efcc66')     
+        $('#12grid31').css('background','#efcc66')     
+        $('#18grid31').css('background','#efcc66')            
+      })      
+      
+      $('#chi3').on('click', function(){
+        $('.grid').css('background','black')         
+        $('#1grid0').css('background','#efcc66')
+        $('#2grid0').css('background','#efcc66')
+        $('#27grid0').css('background','#efcc66')
+        $('#28grid0').css('background','#efcc66')
+        $('#0grid1').css('background','#efcc66')
+        $('#2grid1').css('background','#efcc66')
+        $('#4grid1').css('background','#efcc66')
+        $('#29grid1').css('background','#efcc66')
+        $('#27grid1').css('background','#efcc66')
+        $('#25grid1').css('background','#efcc66')
+        $('#0grid2').css('background','#efcc66')
+        $('#1grid2').css('background','#efcc66')
+        $('#4grid2').css('background','#efcc66')
+        $('#5grid2').css('background','#efcc66')
+        $('#6grid2').css('background','#efcc66')
+        $('#29grid2').css('background','#efcc66')
+        $('#28grid2').css('background','#efcc66')
+        $('#25grid2').css('background','#efcc66')
+        $('#24grid2').css('background','#efcc66')        
+        $('#23grid2').css('background','#efcc66')
+        $('#1grid4').css('background','#efcc66')
+        $('#2grid4').css('background','#efcc66')
+        $('#28grid4').css('background','#efcc66')
+        $('#27grid4').css('background','#efcc66')
+        $('#2grid5').css('background','#efcc66')
+        $('#27grid5').css('background','#efcc66')
+        $('#2grid6').css('background','#efcc66')
+        $('#27grid6').css('background','#efcc66')
+        $('#15grid20').css('background','#efcc66')
+        $('#15grid21').css('background','#efcc66')
+        $('#15grid22').css('background','#efcc66')
+        $('#12grid25').css('background','#efcc66')
+        $('#11grid25').css('background','#efcc66')
+        $('#10grid25').css('background','#efcc66')
+        $('#18grid25').css('background','#efcc66')
+        $('#19grid25').css('background','#efcc66') 
+        $('#20grid25').css('background','#efcc66')     
+        $('#15grid28').css('background','#efcc66')     
+        $('#15grid29').css('background','#efcc66')     
+        $('#15grid30').css('background','#efcc66')     
+        $('#2grid43').css('background','#efcc66')     
+        $('#27grid43').css('background','#efcc66')     
+        $('#2grid44').css('background','#efcc66')     
+        $('#27grid44').css('background','#efcc66')     
+        $('#1grid45').css('background','#efcc66')     
+        $('#2grid45').css('background','#efcc66')     
+        $('#27grid45').css('background','#efcc66')     
+        $('#28grid45').css('background','#efcc66')     
+        $('#0grid47').css('background','#efcc66')     
+        $('#1grid47').css('background','#efcc66')     
+        $('#4grid47').css('background','#efcc66')     
+        $('#5grid47').css('background','#efcc66')     
+        $('#6grid47').css('background','#efcc66')     
+        $('#29grid47').css('background','#efcc66')     
+        $('#28grid47').css('background','#efcc66')     
+        $('#25grid47').css('background','#efcc66') 
+        $('#24grid47').css('background','#efcc66')     
+        $('#23grid47').css('background','#efcc66') 
+        $('#0grid48').css('background','#efcc66')     
+        $('#2grid48').css('background','#efcc66')
+        $('#4grid48').css('background','#efcc66')     
+        $('#29grid48').css('background','#efcc66')
+        $('#27grid48').css('background','#efcc66')     
+        $('#25grid48').css('background','#efcc66')
+        $('#1grid49').css('background','#efcc66')     
+        $('#2grid49').css('background','#efcc66')
+        $('#28grid49').css('background','#efcc66')     
+        $('#27grid49').css('background','#efcc66')
+      })
+     $('#chi4').on('click', function(){
+        $('.grid').css('background','black')         
+        $('#14grid23').css('background','#efcc66')
+        $('#15grid23').css('background','#efcc66')
+        $('#16grid23').css('background','#efcc66')
+        $('#13grid24').css('background','#efcc66')
+        $('#14grid24').css('background','#efcc66')
+        $('#16grid24').css('background','#efcc66')
+        $('#17grid24').css('background','#efcc66')
+        $('#14grid25').css('background','#efcc66')
+        $('#15grid25').css('background','#efcc66')
+        $('#16grid25').css('background','#efcc66')
+     })
+     $('#chi5').on('click', function(){
+        $('.grid').css('background','black')         
+        $('#12grid13').css('background','#efcc66')
+        $('#17grid13').css('background','#efcc66')
+        $('#10grid14').css('background','#efcc66')
+        $('#11grid14').css('background','#efcc66')
+        $('#13grid14').css('background','#efcc66')
+        $('#14grid14').css('background','#efcc66')
+        $('#15grid14').css('background','#efcc66')
+        $('#16grid14').css('background','#efcc66')
+        $('#18grid14').css('background','#efcc66')
+        $('#19grid14').css('background','#efcc66')
+        $('#12grid15').css('background','#efcc66')
+        $('#17grid15').css('background','#efcc66')
+        $('#12grid34').css('background','#efcc66')
+        $('#17grid34').css('background','#efcc66')
+        $('#10grid35').css('background','#efcc66')
+        $('#11grid35').css('background','#efcc66')
+        $('#13grid35').css('background','#efcc66')
+        $('#14grid35').css('background','#efcc66')
+        $('#15grid35').css('background','#efcc66')
+        $('#16grid35').css('background','#efcc66') 
+        $('#18grid35').css('background','#efcc66')
+        $('#19grid35').css('background','#efcc66') 
+        $('#12grid36').css('background','#efcc66')
+        $('#17grid36').css('background','#efcc66') 
+     })      
+     $('#chi6').on('click', function(){
+        $('.grid').css('background','black')         
+        $('#0grid0').css('background','#efcc66')
+        $('#1grid0').css('background','#efcc66')
+        $('#29grid0').css('background','#efcc66')
+        $('#28grid0').css('background','#efcc66')
+        $('#0grid1').css('background','#efcc66')
+        $('#1grid1').css('background','#efcc66')
+        $('#29grid1').css('background','#efcc66')
+        $('#28grid1').css('background','#efcc66')       
+        $('#5grid4').css('background','#efcc66')
+        $('#6grid4').css('background','#efcc66')
+        $('#8grid4').css('background','#efcc66')
+        $('#10grid4').css('background','#efcc66')
+        $('#11grid4').css('background','#efcc66')
+        $('#13grid4').css('background','#efcc66')
+        $('#14grid4').css('background','#efcc66')
+        $('#16grid4').css('background','#efcc66')
+        $('#18grid4').css('background','#efcc66')
+        $('#19grid4').css('background','#efcc66')
+        $('#21grid4').css('background','#efcc66')
+        $('#22grid4').css('background','#efcc66') 
+        $('#24grid4').css('background','#efcc66')
+        $('#6grid5').css('background','#efcc66') 
+        $('#8grid5').css('background','#efcc66')
+        $('#9grid5').css('background','#efcc66') 
+        $('#11grid5').css('background','#efcc66') 
+        $('#13grid5').css('background','#efcc66') 
+        $('#15grid5').css('background','#efcc66') 
+        $('#16grid5').css('background','#efcc66') 
+        $('#17grid5').css('background','#efcc66') 
+        $('#19grid5').css('background','#efcc66') 
+        $('#21grid5').css('background','#efcc66') 
+        $('#23grid5').css('background','#efcc66') 
+        $('#24grid5').css('background','#efcc66') 
+        $('#5grid6').css('background','#efcc66') 
+        $('#11grid6').css('background','#efcc66') 
+        $('#13grid6').css('background','#efcc66') 
+        $('#19grid6').css('background','#efcc66') 
+        $('#21grid6').css('background','#efcc66') 
+        $('#5grid7').css('background','#efcc66') 
+        $('#6grid7').css('background','#efcc66') 
+        $('#7grid7').css('background','#efcc66') 
+        $('#8grid7').css('background','#efcc66') 
+        $('#9grid7').css('background','#efcc66') 
+        $('#10grid7').css('background','#efcc66') 
+        $('#12grid7').css('background','#efcc66') 
+        $('#14grid7').css('background','#efcc66') 
+        $('#15grid7').css('background','#efcc66') 
+        $('#16grid7').css('background','#efcc66') 
+        $('#17grid7').css('background','#efcc66') 
+        $('#18grid7').css('background','#efcc66') 
+        $('#19grid7').css('background','#efcc66') 
+        $('#21grid7').css('background','#efcc66') 
+        $('#23grid7').css('background','#efcc66') 
+        $('#24grid7').css('background','#efcc66') 
+        $('#10grid8').css('background','#efcc66') 
+        $('#12grid8').css('background','#efcc66') 
+        $('#14grid8').css('background','#efcc66') 
+        $('#21grid8').css('background','#efcc66') 
+        $('#23grid8').css('background','#efcc66') 
+        $('#24grid8').css('background','#efcc66') 
+        $('#5grid9').css('background','#efcc66') 
+        $('#6grid9').css('background','#efcc66') 
+        $('#7grid9').css('background','#efcc66') 
+        $('#8grid9').css('background','#efcc66') 
+        $('#10grid9').css('background','#efcc66') 
+        $('#12grid9').css('background','#efcc66') 
+        $('#14grid9').css('background','#efcc66') 
+        $('#15grid9').css('background','#efcc66') 
+        $('#16grid9').css('background','#efcc66') 
+        $('#17grid9').css('background','#efcc66') 
+        $('#18grid9').css('background','#efcc66') 
+        $('#19grid9').css('background','#efcc66') 
+        $('#20grid9').css('background','#efcc66') 
+        $('#5grid10').css('background','#efcc66') 
+        $('#8grid10').css('background','#efcc66') 
+        $('#10grid10').css('background','#efcc66') 
+        $('#12grid10').css('background','#efcc66') 
+        $('#13grid10').css('background','#efcc66') 
+        $('#14grid10').css('background','#efcc66') 
+        $('#22grid10').css('background','#efcc66') 
+        $('#23grid10').css('background','#efcc66') 
+        $('#24grid10').css('background','#efcc66') 
+        $('#6grid11').css('background','#efcc66') 
+        $('#8grid11').css('background','#efcc66') 
+        $('#10grid11').css('background','#efcc66') 
+        $('#15grid11').css('background','#efcc66') 
+        $('#16grid11').css('background','#efcc66') 
+        $('#17grid11').css('background','#efcc66') 
+        $('#18grid11').css('background','#efcc66') 
+        $('#19grid11').css('background','#efcc66') 
+        $('#20grid11').css('background','#efcc66') 
+        $('#21grid11').css('background','#efcc66') 
+        $('#24grid11').css('background','#efcc66') 
+        $('#5grid12').css('background','#efcc66') 
+        $('#6grid12').css('background','#efcc66') 
+        $('#8grid12').css('background','#efcc66') 
+        $('#10grid12').css('background','#efcc66') 
+        $('#11grid12').css('background','#efcc66') 
+        $('#12grid12').css('background','#efcc66') 
+        $('#13grid12').css('background','#efcc66') 
+        $('#14grid12').css('background','#efcc66') 
+        $('#21grid12').css('background','#efcc66') 
+        $('#23grid12').css('background','#efcc66') 
+        $('#6grid13').css('background','#efcc66') 
+        $('#8grid13').css('background','#efcc66') 
+        $('#15grid13').css('background','#efcc66') 
+        $('#16grid13').css('background','#efcc66') 
+        $('#17grid13').css('background','#efcc66') 
+        $('#18grid13').css('background','#efcc66') 
+        $('#19grid13').css('background','#efcc66') 
+        $('#21grid13').css('background','#efcc66') 
+        $('#23grid13').css('background','#efcc66') 
+        $('#24grid13').css('background','#efcc66') 
+        $('#5grid14').css('background','#efcc66') 
+        $('#8grid14').css('background','#efcc66') 
+        $('#9grid14').css('background','#efcc66') 
+        $('#10grid14').css('background','#efcc66') 
+        $('#11grid14').css('background','#efcc66') 
+        $('#12grid14').css('background','#efcc66') 
+        $('#13grid14').css('background','#efcc66') 
+        $('#14grid14').css('background','#efcc66') 
+        $('#19grid14').css('background','#efcc66') 
+        $('#21grid14').css('background','#efcc66') 
+        $('#23grid14').css('background','#efcc66') 
+        $('#5grid15').css('background','#efcc66') 
+        $('#6grid15').css('background','#efcc66') 
+        $('#7grid15').css('background','#efcc66') 
+        $('#15grid15').css('background','#efcc66') 
+        $('#16grid15').css('background','#efcc66') 
+        $('#17grid15').css('background','#efcc66') 
+        $('#19grid15').css('background','#efcc66') 
+        $('#21grid15').css('background','#efcc66') 
+        $('#24grid15').css('background','#efcc66') 
+        $('#8grid16').css('background','#efcc66') 
+        $('#9grid16').css('background','#efcc66') 
+        $('#10grid16').css('background','#efcc66') 
+        $('#11grid16').css('background','#efcc66') 
+        $('#12grid16').css('background','#efcc66') 
+        $('#13grid16').css('background','#efcc66') 
+        $('#14grid16').css('background','#efcc66') 
+        $('#17grid16').css('background','#efcc66') 
+        $('#19grid16').css('background','#efcc66') 
+        $('#21grid16').css('background','#efcc66') 
+        $('#22grid16').css('background','#efcc66') 
+        $('#23grid16').css('background','#efcc66') 
+        $('#24grid16').css('background','#efcc66') 
+        $('#5grid17').css('background','#efcc66') 
+        $('#6grid17').css('background','#efcc66') 
+        $('#7grid17').css('background','#efcc66') 
+        $('#15grid17').css('background','#efcc66') 
+        $('#17grid17').css('background','#efcc66') 
+        $('#19grid17').css('background','#efcc66') 
+        $('#5grid18').css('background','#efcc66') 
+        $('#8grid18').css('background','#efcc66') 
+        $('#9grid18').css('background','#efcc66') 
+        $('#10grid18').css('background','#efcc66') 
+        $('#11grid18').css('background','#efcc66') 
+        $('#12grid18').css('background','#efcc66') 
+        $('#13grid18').css('background','#efcc66') 
+        $('#14grid18').css('background','#efcc66') 
+        $('#15grid18').css('background','#efcc66') 
+        $('#17grid18').css('background','#efcc66') 
+        $('#19grid18').css('background','#efcc66') 
+        $('#20grid18').css('background','#efcc66') 
+        $('#21grid18').css('background','#efcc66') 
+        $('#22grid18').css('background','#efcc66') 
+        $('#23grid18').css('background','#efcc66') 
+        $('#24grid18').css('background','#efcc66') 
+        $('#6grid19').css('background','#efcc66') 
+        $('#8grid19').css('background','#efcc66') 
+        $('#17grid19').css('background','#efcc66') 
+        $('#24grid19').css('background','#efcc66') 
+        $('#5grid20').css('background','#efcc66') 
+        $('#6grid20').css('background','#efcc66') 
+        $('#8grid20').css('background','#efcc66') 
+        $('#10grid20').css('background','#efcc66') 
+        $('#11grid20').css('background','#efcc66') 
+        $('#12grid20').css('background','#efcc66') 
+        $('#13grid20').css('background','#efcc66') 
+        $('#14grid20').css('background','#efcc66') 
+        $('#15grid20').css('background','#efcc66') 
+        $('#16grid20').css('background','#efcc66') 
+        $('#18grid20').css('background','#efcc66') 
+        $('#19grid20').css('background','#efcc66') 
+        $('#20grid20').css('background','#efcc66') 
+        $('#21grid20').css('background','#efcc66') 
+        $('#22grid20').css('background','#efcc66') 
+        $('#23grid20').css('background','#efcc66') 
+        $('#8grid21').css('background','#efcc66') 
+        $('#10grid21').css('background','#efcc66') 
+        $('#16grid21').css('background','#efcc66') 
+        $('#18grid21').css('background','#efcc66') 
+        $('#5grid22').css('background','#efcc66') 
+        $('#6grid22').css('background','#efcc66') 
+        $('#8grid22').css('background','#efcc66') 
+        $('#10grid22').css('background','#efcc66') 
+        $('#12grid22').css('background','#efcc66') 
+        $('#13grid22').css('background','#efcc66') 
+        $('#14grid22').css('background','#efcc66') 
+        $('#16grid22').css('background','#efcc66') 
+        $('#18grid22').css('background','#efcc66') 
+        $('#20grid22').css('background','#efcc66') 
+        $('#21grid22').css('background','#efcc66') 
+        $('#22grid22').css('background','#efcc66') 
+        $('#24grid22').css('background','#efcc66') 
+        $('#5grid23').css('background','#efcc66') 
+        $('#7grid23').css('background','#efcc66') 
+        $('#8grid23').css('background','#efcc66') 
+        $('#10grid23').css('background','#efcc66') 
+        $('#11grid23').css('background','#efcc66') 
+        $('#13grid23').css('background','#efcc66') 
+        $('#15grid23').css('background','#efcc66') 
+        $('#16grid23').css('background','#efcc66') 
+        $('#18grid23').css('background','#efcc66') 
+        $('#19grid23').css('background','#efcc66') 
+        $('#21grid23').css('background','#efcc66') 
+        $('#23grid23').css('background','#efcc66') 
+        $('#24grid23').css('background','#efcc66') 
+        $('#5grid26').css('background','#efcc66') 
+        $('#6grid26').css('background','#efcc66') 
+        $('#8grid26').css('background','#efcc66') 
+        $('#10grid26').css('background','#efcc66') 
+        $('#11grid26').css('background','#efcc66') 
+        $('#13grid26').css('background','#efcc66') 
+        $('#14grid26').css('background','#efcc66') 
+        $('#16grid26').css('background','#efcc66') 
+        $('#18grid26').css('background','#efcc66') 
+        $('#19grid26').css('background','#efcc66') 
+        $('#21grid26').css('background','#efcc66') 
+        $('#22grid26').css('background','#efcc66') 
+        $('#24grid26').css('background','#efcc66') 
+        $('#6grid27').css('background','#efcc66') 
+        $('#8grid27').css('background','#efcc66') 
+        $('#9grid27').css('background','#efcc66') 
+        $('#11grid27').css('background','#efcc66') 
+        $('#13grid27').css('background','#efcc66') 
+        $('#15grid27').css('background','#efcc66') 
+        $('#16grid27').css('background','#efcc66') 
+        $('#17grid27').css('background','#efcc66') 
+        $('#19grid27').css('background','#efcc66') 
+        $('#21grid27').css('background','#efcc66') 
+        $('#23grid27').css('background','#efcc66') 
+        $('#24grid27').css('background','#efcc66') 
+        $('#5grid28').css('background','#efcc66') 
+        $('#11grid28').css('background','#efcc66') 
+        $('#13grid28').css('background','#efcc66') 
+        $('#19grid28').css('background','#efcc66') 
+        $('#21grid28').css('background','#efcc66') 
+        $('#5grid29').css('background','#efcc66') 
+        $('#6grid29').css('background','#efcc66') 
+        $('#7grid29').css('background','#efcc66') 
+        $('#8grid29').css('background','#efcc66') 
+        $('#9grid29').css('background','#efcc66') 
+        $('#10grid29').css('background','#efcc66') 
+        $('#12grid29').css('background','#efcc66') 
+        $('#14grid29').css('background','#efcc66') 
+        $('#15grid29').css('background','#efcc66') 
+        $('#16grid29').css('background','#efcc66') 
+        $('#17grid29').css('background','#efcc66') 
+        $('#18grid29').css('background','#efcc66') 
+        $('#19grid29').css('background','#efcc66') 
+        $('#21grid29').css('background','#efcc66') 
+        $('#23grid29').css('background','#efcc66') 
+        $('#24grid29').css('background','#efcc66') 
+        $('#10grid30').css('background','#efcc66') 
+        $('#12grid30').css('background','#efcc66') 
+        $('#14grid30').css('background','#efcc66') 
+        $('#21grid30').css('background','#efcc66') 
+        $('#23grid30').css('background','#efcc66') 
+        $('#24grid30').css('background','#efcc66') 
+        $('#5grid31').css('background','#efcc66') 
+        $('#6grid31').css('background','#efcc66') 
+        $('#7grid31').css('background','#efcc66') 
+        $('#8grid31').css('background','#efcc66') 
+        $('#10grid31').css('background','#efcc66') 
+        $('#12grid31').css('background','#efcc66') 
+        $('#15grid31').css('background','#efcc66') 
+        $('#16grid31').css('background','#efcc66') 
+        $('#17grid31').css('background','#efcc66') 
+        $('#18grid31').css('background','#efcc66') 
+        $('#19grid31').css('background','#efcc66') 
+        $('#20grid31').css('background','#efcc66') 
+        $('#21grid31').css('background','#efcc66') 
+        $('#5grid32').css('background','#efcc66') 
+        $('#8grid32').css('background','#efcc66') 
+        $('#10grid32').css('background','#efcc66') 
+        $('#12grid32').css('background','#efcc66') 
+        $('#13grid32').css('background','#efcc66') 
+        $('#14grid32').css('background','#efcc66') 
+        $('#22grid32').css('background','#efcc66') 
+        $('#23grid32').css('background','#efcc66') 
+        $('#24grid32').css('background','#efcc66') 
+        $('#6grid33').css('background','#efcc66') 
+        $('#8grid33').css('background','#efcc66') 
+        $('#10grid33').css('background','#efcc66') 
+        $('#15grid33').css('background','#efcc66') 
+        $('#16grid33').css('background','#efcc66') 
+        $('#17grid33').css('background','#efcc66') 
+        $('#18grid33').css('background','#efcc66') 
+        $('#19grid33').css('background','#efcc66') 
+        $('#20grid33').css('background','#efcc66') 
+        $('#21grid33').css('background','#efcc66') 
+        $('#24grid33').css('background','#efcc66') 
+        $('#5grid34').css('background','#efcc66') 
+        $('#6grid34').css('background','#efcc66') 
+        $('#8grid34').css('background','#efcc66') 
+        $('#10grid34').css('background','#efcc66') 
+        $('#11grid34').css('background','#efcc66') 
+        $('#12grid34').css('background','#efcc66') 
+        $('#13grid34').css('background','#efcc66') 
+        $('#14grid34').css('background','#efcc66') 
+        $('#21grid34').css('background','#efcc66') 
+        $('#23grid34').css('background','#efcc66') 
+        $('#6grid35').css('background','#efcc66') 
+        $('#8grid35').css('background','#efcc66') 
+        $('#15grid35').css('background','#efcc66') 
+        $('#16grid35').css('background','#efcc66') 
+        $('#17grid35').css('background','#efcc66') 
+        $('#18grid35').css('background','#efcc66') 
+        $('#19grid35').css('background','#efcc66') 
+        $('#21grid35').css('background','#efcc66') 
+        $('#23grid35').css('background','#efcc66') 
+        $('#24grid35').css('background','#efcc66') 
+        $('#5grid36').css('background','#efcc66') 
+        $('#8grid36').css('background','#efcc66') 
+        $('#9grid36').css('background','#efcc66') 
+        $('#10grid36').css('background','#efcc66') 
+        $('#11grid36').css('background','#efcc66') 
+        $('#12grid36').css('background','#efcc66') 
+        $('#13grid36').css('background','#efcc66') 
+        $('#14grid36').css('background','#efcc66') 
+        $('#19grid36').css('background','#efcc66') 
+        $('#21grid36').css('background','#efcc66') 
+        $('#23grid36').css('background','#efcc66') 
+        $('#5grid37').css('background','#efcc66') 
+        $('#6grid37').css('background','#efcc66') 
+        $('#7grid37').css('background','#efcc66') 
+        $('#15grid37').css('background','#efcc66') 
+        $('#16grid37').css('background','#efcc66') 
+        $('#17grid37').css('background','#efcc66') 
+        $('#19grid37').css('background','#efcc66') 
+        $('#21grid37').css('background','#efcc66') 
+        $('#24grid37').css('background','#efcc66') 
+        $('#8grid38').css('background','#efcc66') 
+        $('#9grid38').css('background','#efcc66') 
+        $('#10grid38').css('background','#efcc66') 
+        $('#11grid38').css('background','#efcc66') 
+        $('#12grid38').css('background','#efcc66') 
+        $('#13grid38').css('background','#efcc66') 
+        $('#14grid38').css('background','#efcc66') 
+        $('#17grid38').css('background','#efcc66') 
+        $('#19grid38').css('background','#efcc66') 
+        $('#21grid38').css('background','#efcc66') 
+        $('#22grid38').css('background','#efcc66') 
+        $('#23grid38').css('background','#efcc66') 
+        $('#24grid38').css('background','#efcc66') 
+        $('#5grid39').css('background','#efcc66') 
+        $('#6grid39').css('background','#efcc66') 
+        $('#7grid39').css('background','#efcc66') 
+        $('#15grid39').css('background','#efcc66') 
+        $('#17grid39').css('background','#efcc66') 
+        $('#19grid39').css('background','#efcc66') 
+        $('#5grid40').css('background','#efcc66') 
+        $('#8grid40').css('background','#efcc66') 
+        $('#9grid40').css('background','#efcc66') 
+        $('#10grid40').css('background','#efcc66') 
+        $('#11grid40').css('background','#efcc66') 
+        $('#12grid40').css('background','#efcc66') 
+        $('#13grid40').css('background','#efcc66') 
+        $('#14grid40').css('background','#efcc66') 
+        $('#15grid40').css('background','#efcc66') 
+        $('#17grid40').css('background','#efcc66') 
+        $('#19grid40').css('background','#efcc66') 
+        $('#20grid40').css('background','#efcc66') 
+        $('#21grid40').css('background','#efcc66') 
+        $('#22grid40').css('background','#efcc66') 
+        $('#23grid40').css('background','#efcc66') 
+        $('#24grid40').css('background','#efcc66') 
+        $('#6grid41').css('background','#efcc66') 
+        $('#8grid41').css('background','#efcc66') 
+        $('#17grid41').css('background','#efcc66') 
+        $('#24grid41').css('background','#efcc66') 
+        $('#5grid42').css('background','#efcc66') 
+        $('#6grid42').css('background','#efcc66') 
+        $('#8grid42').css('background','#efcc66') 
+        $('#10grid42').css('background','#efcc66') 
+        $('#11grid42').css('background','#efcc66') 
+        $('#12grid42').css('background','#efcc66') 
+        $('#13grid42').css('background','#efcc66') 
+        $('#14grid42').css('background','#efcc66') 
+        $('#15grid42').css('background','#efcc66') 
+        $('#16grid42').css('background','#efcc66') 
+        $('#19grid42').css('background','#efcc66') 
+        $('#20grid42').css('background','#efcc66') 
+        $('#21grid42').css('background','#efcc66') 
+        $('#22grid42').css('background','#efcc66') 
+        $('#23grid42').css('background','#efcc66') 
+        $('#18grid42').css('background','#efcc66') 
+        $('#8grid43').css('background','#efcc66') 
+        $('#10grid43').css('background','#efcc66') 
+        $('#16grid43').css('background','#efcc66') 
+        $('#18grid43').css('background','#efcc66') 
+        $('#5grid44').css('background','#efcc66') 
+        $('#6grid44').css('background','#efcc66') 
+        $('#8grid44').css('background','#efcc66') 
+        $('#10grid44').css('background','#efcc66') 
+        $('#12grid44').css('background','#efcc66') 
+        $('#13grid44').css('background','#efcc66') 
+        $('#14grid44').css('background','#efcc66') 
+        $('#16grid44').css('background','#efcc66') 
+        $('#18grid44').css('background','#efcc66') 
+        $('#20grid44').css('background','#efcc66') 
+        $('#21grid44').css('background','#efcc66') 
+        $('#22grid44').css('background','#efcc66') 
+        $('#24grid44').css('background','#efcc66') 
+        $('#5grid45').css('background','#efcc66') 
+        $('#7grid45').css('background','#efcc66') 
+        $('#8grid45').css('background','#efcc66') 
+        $('#10grid45').css('background','#efcc66') 
+        $('#11grid45').css('background','#efcc66') 
+        $('#13grid45').css('background','#efcc66') 
+        $('#15grid45').css('background','#efcc66') 
+        $('#16grid45').css('background','#efcc66') 
+        $('#18grid45').css('background','#efcc66') 
+        $('#19grid45').css('background','#efcc66') 
+        $('#21grid45').css('background','#efcc66') 
+        $('#23grid45').css('background','#efcc66') 
+        $('#24grid45').css('background','#efcc66') 
+        $('#29grid48').css('background','#efcc66') 
+        $('#28grid48').css('background','#efcc66') 
+        $('#1grid48').css('background','#efcc66') 
+        $('#0grid48').css('background','#efcc66') 
+        $('#28grid49').css('background','#efcc66') 
+        $('#29grid49').css('background','#efcc66') 
+        $('#1grid49').css('background','#efcc66') 
+        $('#0grid49').css('background','#efcc66') 
+     })       
+      
+      
+      })
+
+    return(
+    <div>
+        <h1>The Game Of Life <i class="fa fa-globe"></i></h1>
+      <div className="gB"></div>
+      <div className="gridy">
+    {myArr.map(function(val, index){return(<ul className={"row"+index}> {myArr[index].map(function(x,i){return(<li className="grid" id={index+"grid"+i}></li>
+                                    )}
+                                    )}</ul>)}
+                                    )}
+      </div>
+      <div className="gB2"></div>
+
+      <div className="gB3">
+        <div className="words">
+        <p className="one">Generation: <br />{this.state.generation}</p> 
+        <p className="two" id="two1" onClick={this.startChange}>Start/Pause/Resume</p> 
+        <p className="two2" id="two2" onClick={this.startChange}>Start/Pause/Resume 2</p> 
+        <p className="three" onClick={this.randomChange}>Randomize</p> 
+        <p className="four" onClick={this.handleChange}>Clear Board</p> 
+        <p className="five">Patterns</p> 
+        </div>
+        <div className="words2">
+         <div className="six">Patterns: 
+           <p className="a1" id="chi1">Glider Gun</p> 
+           <p className="a1" id="chi2">Pulsar</p> 
+           <p className="a1" id="chi3">Crazy Corners</p> 
+           <p className="a1" id="chi4">Baby Pulsar</p> 
+           <p className="a1" id="chi5">Pentadecathalon</p> 
+           <p className="a1" id="chi6">Maximum Density Stil Life</p>
+           <p className="a1" id="chi7">Back</p> 
+         </div>  
+        </div>        
+      </div>
+
+
+
+    </div>
+    )
+    
+    
+  }
+}
+ReactDOM.render(<MyComponent />, document.getElementById('in'))
+    </script>
+  </head>
+  <body>
+    <div id="out">
+     <div id="in">
+     </div>      
+    </div>
+  </body>
+</html>
